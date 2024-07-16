@@ -2,7 +2,6 @@
 export const namespace = 'cdm_v1';
 export const taskQueueName = 'workflow://asa/v1';
 export const queryQueueName = 'operation-queue://query/v1';
-//export const address = 'temporal-frontend.temporal-sit1.svc.cluster.local:7233';
 export const address = 'localhost:7233';
 
 export enum CDMWorkflowType  {
@@ -23,3 +22,8 @@ export type WorkflowInput = {
   description: string;
   operations: CDMWorkflowOperation[];
 };
+
+export interface SemanticQueryExecuteOperationResponseV1  {
+  data: any | null;
+  data_location_id: string | null;
+}

@@ -32,6 +32,7 @@ const queryInput: any =
   	  ]
   	}
   },
+  "application_id": "c806452d-ed9c-4f0d-a670-a5460139e496",
   "content_type": 5
 }
 

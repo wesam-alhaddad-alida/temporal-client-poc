@@ -1,7 +1,7 @@
 import { proxyActivities } from '@temporalio/workflow';
 import { ApplicationFailure } from '@temporalio/common';
 import { Activities } from './activities';
-import { WorkflowInput, queryQueueName } from './shared';
+import { SemanticQueryExecuteOperationResponseV1, WorkflowInput, queryQueueName } from './shared';
 
 const { 'operation://query/v1/semantic/execute': OperationQueryV1SemanticExecute } = proxyActivities<Activities>({
   startToCloseTimeout: '1 minute',
@@ -19,7 +19,7 @@ export async function QueryAndWeightCalculation(input: WorkflowInput): Promise<s
 
   const queryOperationInput = input.operations[0].payload
 
-  let rawResult: any;
+  let rawResult: SemanticQueryExecuteOperationResponseV1;
   try {
     rawResult = await OperationQueryV1SemanticExecute(queryOperationInput);
   } catch (rawQueryServiceErr) {
@@ -27,6 +27,6 @@ export async function QueryAndWeightCalculation(input: WorkflowInput): Promise<s
     throw new ApplicationFailure(`query service raw results failed. Error: ${rawQueryServiceErr}`);
   }
 
-  return `Query result ${rawResult}`;
+  return `Query result data: ${rawResult.data}.  Data Location id: ${rawResult.data_location_id}`;
   
 }
