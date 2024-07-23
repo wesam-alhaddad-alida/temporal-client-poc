@@ -1,5 +1,6 @@
 import { NativeConnection, Worker } from '@temporalio/worker';
 import { namespace, taskQueueName, address } from './shared';
+import AppIDInterceptor from './interceptors';
 
 async function run() {
 
@@ -10,6 +11,9 @@ async function run() {
   const worker = await Worker.create({
     workflowsPath: require.resolve('./workflows'),
     taskQueue: taskQueueName,
+    interceptors: {
+      activityInbound: [(ctx) => new AppIDInterceptor('c806452d-ed9c-4f0d-a670-a5460139e496')]
+    },
     namespace: namespace,
     connection: workerConnection,
   });
